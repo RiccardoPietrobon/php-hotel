@@ -39,17 +39,18 @@
         ],
 
     ];
-    /* con questo ciclo vedo tutti gli hotel con le loro caratteristiche */
-    
-          var_dump(array_keys($hotels[0]));
-          $nr_hotels = count($hotels);
-    
-   /*   foreach($hotels as $hotel){
-        var_dump($hotel);
-        var_dump($hotel["vote"]);
 
-          var_dump(array_keys($hotels[0]));
-    } */ 
+    $nr_hotels = count($hotels);
+
+
+    foreach($hotels as $hotel){
+      //var_dump($hotel["name"]);
+      foreach($hotel as $item){
+        //var_dump($item[0]);
+      }
+    }
+
+
 
 ?>
 
@@ -70,55 +71,35 @@
 </head>
 <body>
     <div class="container">
+
+        <form method="POST">
+          <select class="form-select" id="garage" name="garage">
+            <option>Parking</option>
+            <option>No parking</option>
+          </select>
+        </form>
+
         <h1>Lista Hotel</h1>
+
         <table class="table">
+
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <?php for ($i=1; $i<($nr_hotels+1); $i++) : ?>
-                  <th scope="col"> Hotel n° <?= $i ?> </th>
-              <?php endfor ?>
+              <th><?php echo implode('</th><th>', array_keys(current($hotels))); ?></th>
             </tr>
           </thead>
+
           <tbody>
-            
-            <tr>
-              <th scope="row">Name</th>
-              <?php foreach ($hotels as $key => $hotel) : ?>
-                  <td><?= $hotel["name"] ?></td>
-              <?php endforeach ?>
-            </tr>
-
-            <tr>
-              <th scope="row">Description</th>
-              <?php foreach ($hotels as $key => $hotel) : ?>
-                  <td><?= $hotel["description"] ?></td>
-              <?php endforeach ?>
-            </tr>
-
-            <tr>
-              <th scope="row">Parking</th>
-              <?php foreach ($hotels as $key => $hotel) : ?>
-                  <td><?= $hotel["parking"] ?></td>
-              <?php endforeach ?>
-            </tr>
-
-            <tr>
-              <th scope="row">Vote</th>
-              <?php foreach ($hotels as $key => $hotel) : ?>
-                  <td><?= $hotel["vote"] ?></td>
-              <?php endforeach ?>
-            </tr>
-
-            <tr>
-              <th scope="row">Distance_to_center</th>
-              <?php foreach ($hotels as $key => $hotel) : ?>
-                  <td><?= $hotel["distance_to_center"] ?></td>
-              <?php endforeach ?>
-            </tr>
-            
+            <?php foreach ($hotels as $hotel): array_map('htmlentities', $hotel); ?>
+              <?php if($hotel["parking"]) : ?>
+                <tr>
+                  <td><?php echo implode('</td><td>', $hotel); ?></td>
+                </tr>
+              <?php endif ?>
+            <?php endforeach; ?>
           </tbody>
+
         </table>
-            </div>
-        </body>
-        </html>
+      </div>
+    </body>
+  </html>
